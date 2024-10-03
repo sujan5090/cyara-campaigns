@@ -1,0 +1,30 @@
+name: Run Campaign
+
+on:
+  pull_request:
+    types: [opened, synchronize, labeled]
+    branches:
+      - '**'
+  push:
+    branches:
+      - main
+    tags:
+      - '**'
+
+jobs:
+  run-campaigns:
+    name: Cyara Campaigns
+    runs-on: ubuntu-20.04
+
+    steps:
+     - name: Trigger Campaign 1
+        run: |
+          curl -X POST "https://cyara-api-url/campaigns/1/start" `
+          -H "Authorization: Bearer ${{ secrets.CYARA_API_TOKEN }}"
+        shell: bash
+
+      - name: Trigger Campaign 2
+        run: |
+          curl -X POST "https://cyara-api-url/campaigns/2/start" `
+          -H "Authorization: Bearer ${{ secrets.CYARA_API_TOKEN }}"
+        shell: bash
